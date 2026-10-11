@@ -1,0 +1,443 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Laboratorio HTML | Glosario Interactivo</title>
+<style>
+:root {
+  --bg:#0b1020;
+  --panel:#151d32;
+  --panel2:#202b44;
+  --text:#edf3ff;
+  --muted:#aab9d3;
+  --accent:#8b7cff;
+  --line:#34415c;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  font-family:system-ui,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+header {
+  padding:55px 20px 35px;
+  text-align:center;
+  background:linear-gradient(135deg,#20245b,#101b30);
+}
+.logo {
+  color:#b6aaff;
+  letter-spacing:3px;
+  font-weight:bold;
+}
+h1 { font-size:clamp(30px,5vw,52px); margin:15px 0; }
+header p { color:var(--muted); }
+.stats { margin-top:20px; color:#b9b1ff; }
+.container { max-width:1200px; margin:auto; padding:30px 20px; }
+.controls { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:25px; }
+input,select {
+  padding:14px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:12px;
+  color:var(--text);
+  font-size:15px;
+}
+#search { flex:1; min-width:220px; }
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(290px,1fr));
+  gap:20px;
+}
+.card {
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:22px;
+  transition:.2s;
+  min-width:0;
+}
+.card:hover {
+  transform:translateY(-3px);
+  border-color:var(--accent);
+}
+.tag {
+  display:inline-block;
+  color:#c4baff;
+  background:#302c57;
+  padding:7px 12px;
+  border-radius:9px;
+  font-weight:bold;
+}
+.category {
+  float:right;
+  color:var(--muted);
+  font-size:12px;
+}
+.card h2 { font-size:19px; margin:17px 0 8px; }
+.card p { color:var(--muted); line-height:1.6; min-height:48px; }
+button {
+  background:var(--accent);
+  border:0;
+  border-radius:10px;
+  color:white;
+  padding:11px 15px;
+  cursor:pointer;
+  font-weight:bold;
+}
+button:hover { filter:brightness(1.15); }
+.example { display:none; margin-top:20px; }
+.example.open { display:block; }
+pre {
+  background:#080d19;
+  padding:15px;
+  border-radius:12px;
+  overflow:auto;
+  color:#b9e5ff;
+  font-size:12px;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+}
+iframe {
+  width:100%;
+  height:155px;
+  background:white;
+  border:0;
+  border-radius:10px;
+}
+.example h3 { font-size:13px; color:#c4baff; }
+.actions { display:flex; gap:8px; flex-wrap:wrap; }
+.copy { background:#33405c; }
+footer {
+  text-align:center;
+  padding:30px;
+  color:var(--muted);
+  border-top:1px solid var(--line);
+}
+.light {
+  --bg:#f2f5fc;
+  --panel:#ffffff;
+  --panel2:#e8edfa;
+  --text:#17213a;
+  --muted:#53627c;
+  --line:#d8dfed;
+}
+.topbar {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 20px;
+  background:var(--panel);
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <strong>🚀 HTML LAB - By Joshua "5A6"</strong>
+  <button onclick="document.body.classList.toggle('light')">
+    ☀️ / 🌙 Modo
+  </button>
+</div>
+
+<header>
+  <div class="logo">APRENDE · EXPERIMENTA · CREA</div>
+  <h1>Laboratorio Interactivo HTML</h1>
+  <p>Explora etiquetas HTML, aprende sus conceptos y observa ejemplos reales.</p>
+  <div class="stats" id="stats"></div>
+</header>
+
+<main class="container">
+  <div class="controls">
+    <input id="search" placeholder="🔎 Buscar una etiqueta o concepto...">
+    <select id="filter">
+      <option value="Todas">Todas las categorías</option>
+      <option>Estructura</option>
+      <option>Texto</option>
+      <option>Multimedia</option>
+      <option>Listas</option>
+      <option>Tablas</option>
+      <option>Formularios</option>
+    </select>
+  </div>
+
+  <div id="grid" class="grid"></div>
+</main>
+
+<footer>
+  <strong>Laboratorio HTML</strong>
+  <p>Desarrollo de Aplicaciones Web · Glosario interactivo</p>
+  <p>Aprender programación es más fácil cuando puedes experimentar.</p>
+</footer>
+
+<script>
+const tags = [];
+
+function add(tag, title, desc, category, code) {
+  tags.push({tag,title,desc,category,code});
+}
+
+// ENCABEZADOS Y TEXTO
+for(let n=1;n<=6;n++){
+  add("h"+n,"Encabezado nivel "+n,
+    "Define un título de nivel "+n+
+    ". Los niveles van del 1 (principal) al 6 (menor).",
+    "Texto",
+    "<h"+n+">Ejemplo de encabezado "+n+"</h"+n+">");
+}
+
+add("p","Párrafo",
+  "Define un párrafo de texto.",
+  "Texto",
+  "<p>Este es un párrafo de mi página web.</p>");
+
+add("br","Salto de línea",
+  "Inserta un salto de línea sin crear un párrafo nuevo.",
+  "Texto",
+  "Hola<br>Mundo<br>HTML");
+
+add("hr","Separador horizontal",
+  "Representa una separación temática entre contenidos.",
+  "Texto",
+  "<p>Primera sección</p><hr><p>Segunda sección</p>");
+
+add("strong","Texto importante",
+  "Indica que una parte del texto tiene gran importancia.",
+  "Texto",
+  "<p>Atención: <strong>Guarda tus cambios.</strong></p>");
+
+add("em","Énfasis",
+  "Da énfasis a una parte del texto; normalmente aparece en cursiva.",
+  "Texto",
+  "<p>Esto es <em>muy importante</em>.</p>");
+
+add("span","Fragmento de texto",
+  "Agrupa una parte pequeña del contenido para aplicarle estilos.",
+  "Texto",
+  '<p>Mi color favorito es <span style="color:blue">azul</span>.</p>');
+
+// ENLACES Y MULTIMEDIA
+add("a","Enlace",
+  "Crea un enlace hacia otra página o sitio web.",
+  "Multimedia",
+  '<a href="https://developer.mozilla.org/es/docs/Web/HTML" target="_blank" rel="noopener">Aprender HTML en MDN</a>');
+
+add("img","Imagen",
+  "Inserta una imagen dentro de la página web.",
+  "Multimedia",
+  '<img src="https://placehold.co/250x110/7765e3/ffffff?text=Mi+imagen" alt="Imagen de ejemplo" width="250">');
+
+// LISTAS
+add("ul","Lista sin orden",
+  "Crea una lista cuyos elementos no tienen un orden numérico.",
+  "Listas",
+  "<ul><li>Manzana</li><li>Pera</li><li>Uva</li></ul>");
+
+add("ol","Lista ordenada",
+  "Crea una lista numerada.",
+  "Listas",
+  "<ol><li>Encender la PC</li><li>Abrir VS Code</li><li>Programar</li></ol>");
+
+add("li","Elemento de lista",
+  "Define cada elemento de una lista ordenada o sin orden.",
+  "Listas",
+  "<ul><li>Primer elemento</li><li>Segundo elemento</li></ul>");
+
+// TABLAS
+add("table","Tabla",
+  "Organiza información en filas y columnas.",
+  "Tablas",
+  '<table border="1" cellpadding="8"><tr><th>Nombre</th><th>Edad</th></tr><tr><td>Ana</td><td>20</td></tr></table>');
+
+add("tr","Fila de tabla",
+  "Define una fila dentro de una tabla.",
+  "Tablas",
+  '<table border="1" cellpadding="8"><tr><td>Fila 1</td></tr><tr><td>Fila 2</td></tr></table>');
+
+add("th","Encabezado de tabla",
+  "Define una celda de encabezado.",
+  "Tablas",
+  '<table border="1" cellpadding="8"><tr><th>Producto</th><th>Precio</th></tr></table>');
+
+add("td","Celda de datos",
+  "Define una celda que contiene información.",
+  "Tablas",
+  '<table border="1" cellpadding="8"><tr><td>Computadora</td><td>$5000</td></tr></table>');
+
+// FORMULARIOS
+add("form","Formulario",
+  "Agrupa controles para introducir y enviar información.",
+  "Formularios",
+  '<form onsubmit="event.preventDefault();alert(\'Formulario enviado\')"><input placeholder="Tu nombre" required><button>Enviar</button></form>');
+
+add("label","Etiqueta de campo",
+  "Describe un campo de formulario.",
+  "Formularios",
+  '<label for="nombre">Nombre:</label><br><input id="nombre" placeholder="Escribe tu nombre">');
+
+add("input","Campo de entrada",
+  "Permite introducir información, como texto o números.",
+  "Formularios",
+  '<input type="text" placeholder="Escribe algo"><br><br><input type="number" placeholder="Edad">');
+
+add("textarea","Área de texto",
+  "Permite escribir textos de varias líneas.",
+  "Formularios",
+  '<textarea rows="4" cols="28" placeholder="Escribe un comentario..."></textarea>');
+
+add("select","Lista desplegable",
+  "Permite elegir una opción de una lista.",
+  "Formularios",
+  '<select><option>Rojo</option><option>Azul</option><option>Verde</option></select>');
+
+add("button","Botón interactivo",
+  "Crea un botón que puede ejecutar una acción.",
+  "Formularios",
+  '<button onclick="alert(\'¡Hola! Tu botón funciona.\')">Haz clic aquí</button>');
+
+// ESTRUCTURA SEMÁNTICA
+add("div","Contenedor",
+  "Agrupa elementos dentro de una sección genérica.",
+  "Estructura",
+  '<div style="background:#ddd9ff;padding:18px;border-radius:12px"><h3>Mi contenedor</h3><p>Contenido agrupado.</p></div>');
+
+add("header","Encabezado de página",
+  "Representa el encabezado de una página o sección.",
+  "Estructura",
+  '<header style="background:#dceafe;padding:15px"><h2>Mi sitio web</h2><p>Bienvenido</p></header>');
+
+add("nav","Navegación",
+  "Agrupa enlaces que permiten navegar por el sitio.",
+  "Estructura",
+  '<nav><a href="#inicio">Inicio</a> | <a href="#servicios">Servicios</a> | <a href="#contacto">Contacto</a></nav>');
+
+add("main","Contenido principal",
+  "Identifica el contenido principal de la página.",
+  "Estructura",
+  "<main><h2>Contenido principal</h2><p>Información central de la página.</p></main>");
+
+add("section","Sección de contenido",
+  "Define una sección temática dentro de la página.",
+  "Estructura",
+  "<section><h2>Noticias</h2><p>Estas son las noticias más recientes.</p></section>");
+
+add("article","Artículo independiente",
+  "Representa contenido independiente, como una noticia o publicación.",
+  "Estructura",
+  "<article><h2>Mi artículo</h2><p>Hoy aprendí nuevas etiquetas HTML.</p></article>");
+
+add("aside","Contenido complementario",
+  "Contiene información relacionada, pero secundaria al contenido principal.",
+  "Estructura",
+  '<aside style="background:#fff1ca;padding:15px"><h3>Dato curioso</h3><p>HTML no es un lenguaje de programación.</p></aside>');
+
+add("footer","Pie de página",
+  "Define el pie de página de un documento o sección.",
+  "Estructura",
+  '<footer style="background:#e5e7eb;padding:15px"><p>© 2026 Mi sitio web</p></footer>');
+
+const grid=document.getElementById("grid");
+const search=document.getElementById("search");
+const filter=document.getElementById("filter");
+
+document.getElementById("stats").textContent =
+  tags.length+" etiquetas HTML • Ejemplos interactivos • Código real";
+
+function escapeHTML(s){
+  return s.replaceAll("&","&amp;")
+          .replaceAll("<","&lt;")
+          .replaceAll(">","&gt;")
+          .replaceAll('"',"&quot;");
+}
+
+function render(){
+  const term=search.value.toLowerCase().trim();
+  const category=filter.value;
+  grid.innerHTML="";
+
+  const filtered=tags.filter(t=>
+    (category==="Todas" || t.category===category) &&
+    (t.tag.includes(term) ||
+     t.title.toLowerCase().includes(term) ||
+     t.desc.toLowerCase().includes(term))
+  );
+
+  filtered.forEach((t)=>{
+    const card=document.createElement("div");
+    card.className="card";
+
+    card.innerHTML=`
+      <span class="tag">&lt;${t.tag}&gt;</span>
+      <span class="category">${t.category}</span>
+      <h2>${t.title}</h2>
+      <p>${t.desc}</p>
+      <button class="toggle">▶ Ver ejemplo</button>
+      <div class="example">
+        <h3>📋 Código HTML</h3>
+        <pre><code>${escapeHTML(t.code)}</code></pre>
+        <div class="actions">
+          <button class="copy">Copiar código</button>
+        </div>
+        <h3>👁 Resultado real</h3>
+        <iframe title="Ejemplo de ${t.tag}"
+          sandbox="allow-scripts allow-forms allow-popups">
+        </iframe>
+      </div>
+    `;
+
+    const example=card.querySelector(".example");
+    const toggle=card.querySelector(".toggle");
+    const frame=card.querySelector("iframe");
+
+    toggle.addEventListener("click",()=>{
+      const opened=example.classList.toggle("open");
+      toggle.textContent=opened?"✕ Ocultar ejemplo":"▶ Ver ejemplo";
+
+      if(opened && !frame.srcdoc){
+        frame.srcdoc=`<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<style>
+body{font-family:Arial,sans-serif;padding:12px;color:#17213a}
+button{background:#7565dc;color:white;border:0;
+padding:10px;border-radius:7px;cursor:pointer}
+input,textarea,select{padding:7px;max-width:100%}
+</style>
+</head>
+<body>${t.code}</body>
+</html>`;
+      }
+    });
+
+    card.querySelector(".copy").addEventListener("click",async()=>{
+      try{
+        await navigator.clipboard.writeText(t.code);
+        card.querySelector(".copy").textContent="✓ Copiado";
+      }catch(e){
+        const area=document.createElement("textarea");
+        area.value=t.code;
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand("copy");
+        area.remove();
+        card.querySelector(".copy").textContent="✓ Copiado";
+      }
+    });
+
+    grid.appendChild(card);
+  });
+
+  if(!filtered.length){
+    grid.innerHTML="<p>No se encontraron etiquetas.</p>";
+  }
+}
+
+search.addEventListener("input",render);
+filter.addEventListener("change",render);
+render();
+</script>
+</body>
+</html>
